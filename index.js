@@ -6,7 +6,12 @@ const eps = +prompt('Введіть значення параметру eps'); /
 console.log('|\tx\t\t|\tarctg(x)\t\t|\tS\t\t\t\t|\tn\t|');
 
 for (let x = xp; x <= xk && x < -1; x += dx) {
-  
+  let result = -Math.PI / 2 + sum(x, eps);
+
+  console.log(`|\t${x.toFixed(2)}\t|\t${Math.atan(x).toFixed(10)}\t|\t${result.toFixed(10)}\t|\t${getAdditionsAmount(x, eps)}\t|`);
+}
+
+function sum(x, eps) {
   let a = -1 / x;
   let S = a;
   let n = 0;
@@ -14,13 +19,28 @@ for (let x = xp; x <= xk && x < -1; x += dx) {
   do {
     n++;
 
-    let R = (1 - 2 * n) / (2 * n * x * x + x * x);
-    
-    a *= R;
+    a = getAddition(a, x, n);
+
     S += a;
   } while (Math.abs(a) >= eps);
 
-  let result = -Math.PI / 2 + S;
+  return S;
+}
 
-  console.log(`|\t${x.toFixed(2)}\t|\t${Math.atan(x).toFixed(10)}\t|\t${result.toFixed(10)}\t|\t${n}\t|`);
+function getAdditionsAmount(x, eps) {
+  let a = -1 / x;
+  let n = 0;
+
+  do {
+    n++;
+
+    a = getAddition(a, x, n);
+  } while (Math.abs(a) >= eps);
+
+  return n;
+}
+
+function getAddition(prevA, x, n) {
+  let R = (1 - 2 * n) / (2 * n * x * x + x * x);
+  return prevA * R;
 }
