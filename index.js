@@ -31,7 +31,6 @@ function f(x) {
       S += a;
 
     } while (i < 8);
-
     return S;
   }
 }

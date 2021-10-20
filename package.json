@@ -1,0 +1,22 @@
+{
+  "name": "lab5.3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LukashevychAndriy/Lab-5.3.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LukashevychAndriy/Lab-5.3/issues"
+  },
+  "homepage": "https://github.com/LukashevychAndriy/Lab-5.3#readme",
+  "devDependencies": {
+    "jest": "^27.3.1"
+  }
+}
