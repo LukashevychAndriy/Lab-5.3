@@ -1,46 +1,45 @@
-const xp = +prompt('Введіть значення параметру хp'); // Запрошуємо ввід параметру x початкового
-const xk = +prompt('Введіть значення параметру хk'); // Запрошуємо ввід параметру x кінцевого
-const dx = +prompt('Введіть значення параметру dx'); // Запрошуємо ввід параметру кроку
-const eps = +prompt('Введіть значення параметру eps'); // Запрошуємо ввід параметру точності
+const tp = +prompt('Введіть значення параметру tp'); // Запрошуємо ввід параметру t початкового
+const tk = +prompt('Введіть значення параметру tk'); // Запрошуємо ввід параметру t кінцевого
+const n = +prompt('Введіть значення параметру n'); // Запрошуємо ввід параметру кількості відрізків розбиття інтервалу
 
-console.log('|\tx\t\t|\tarctg(x)\t\t|\tS\t\t\t\t|\tn\t|');
+const dt = (tk - tp) / n;
 
-for (let x = xp; x <= xk && x < -1; x += dx) {
-  let result = -Math.PI / 2 + sum(x, eps);
+console.log(`|\tt\t\t|\tf(t*t) + 2f(2t + 1)\t|`);
 
-  console.log(`|\t${x.toFixed(2)}\t|\t${Math.atan(x).toFixed(10)}\t|\t${result.toFixed(10)}\t|\t${getAdditionsAmount(x, eps)}\t|`);
+for (let t = tp; t <= tk; t += dt) {
+  let result = f(t * t) + 2 * f(2 * t + 1);
+
+  console.log(`|\t${t.toFixed(2)}\t|\t\t${result.toFixed(7)}\t\t|`);
 }
 
-function sum(x, eps) {
-  let a = -1 / x;
-  let S = a;
-  let n = 0;
+function f(x) {
+  if (Math.abs(x) >= 1) {
+    return (Math.sin(x) + 1) / (Math.sin(x) + Math.cos(x));
+  } else if (x === 0) {
+    return 0;
+  } else {
+    let a = x;
+    let S = a;
+    let i = 0;
 
-  do {
-    n++;
+    do {
+      i++;
 
-    a = getAddition(a, x, n);
+      let R = (Math.pow(x, 2 * i + 1) / (factorial(2 * i + 1))) / (Math.pow(x, 2 * (i - 1) + 1) / (factorial(2 * (i - 1) + 1)));
 
-    S += a;
-  } while (Math.abs(a) >= eps);
+      a *= R;
+      S += a;
 
-  return S;
+    } while (i < 8);
+
+    return S;
+  }
 }
 
-function getAdditionsAmount(x, eps) {
-  let a = -1 / x;
-  let n = 0;
-
-  do {
-    n++;
-
-    a = getAddition(a, x, n);
-  } while (Math.abs(a) >= eps);
-
-  return n;
-}
-
-function getAddition(prevA, x, n) {
-  let R = (1 - 2 * n) / (2 * n * x * x + x * x);
-  return prevA * R;
+function factorial(n) {
+  if (n != 1) {
+    return n * factorial(n - 1);
+  } else {
+    return 1;
+  }
 }
